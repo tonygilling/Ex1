@@ -9,6 +9,16 @@ Ext.define('CustomApp', {
             var blocked = record.get('Blocked')
             console.log(blocked,record);
             return blocked;
+        });
+        var record = records[0];
+        record.set("Blocked",true);
+        record.save({
+            callback: function(result, operation) {
+                if(operation.wasSuccessful()) {
+            //Get the new defect's objectId
+                console.log(record.get("Name")+" saved");
+                    }
+                }
         }); 
          console.log(this.taco);
         Ext.Msg.alert('Status', 'Store Loaded with '+records.length+' records and '+blockedRecords.length + ' blocked records.');
@@ -29,8 +39,7 @@ Ext.define('CustomApp', {
                 filters: [
         {
             property: 'Blocked',
-
-            value: 'true'
+            value: false
         }
     ],
         });
