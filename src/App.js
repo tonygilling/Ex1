@@ -13,6 +13,7 @@ Ext.define('CustomApp', {
          console.log(this.taco);
         Ext.Msg.alert('Status', 'Store Loaded with '+records.length+' records and '+blockedRecords.length + ' blocked records.');
     },
+    
 
     launch: function() {
         var store = Ext.create('Rally.data.WsapiDataStore', {
@@ -24,7 +25,14 @@ Ext.define('CustomApp', {
                     }
                 },
                 autoLoad:true,
-                fetch: ['Name', 'ScheduleState', 'Blocked']
+                fetch: ['Name', 'ScheduleState', 'Blocked'],
+                filters: [
+        {
+            property: 'Blocked',
+
+            value: 'true'
+        }
+    ],
         });
         var scope = {
             taco:true
