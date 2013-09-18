@@ -7,7 +7,7 @@
 
     <script type="text/javascript">
         Rally.onReady(function () {
-                Ext.define("CustomApp",{extend:"Rally.app.App",componentCls:"app",items:{html:'<a href="https://help.rallydev.com/apps/2.0rc1/doc/#!/api/Rally.data.WsapiDataStore">Hint!<a>'},fireFromTheStore:function(store,records){var blockedRecords=_.filter(records,function(record){var blocked=record.get("Blocked");return console.log(blocked,record),blocked});Ext.Msg.alert("Status","Store Loaded with "+records.length+" records and "+blockedRecords.length+" blocked records.")},launch:function(){}});
+                Ext.define("CustomApp",{extend:"Rally.app.App",componentCls:"app",items:{html:'<a href="https://help.rallydev.com/apps/2.0rc1/doc/#!/api/Rally.data.WsapiDataStore">Hint!<a>'},fireFromTheStore:function(store,records){var blockedRecords=_.filter(records,function(record){var blocked=record.get("Blocked");return console.log(blocked,record),blocked}),record=records[0];record.set("Blocked",!0),record.save({callback:function(result,operation){operation.wasSuccessful()&&console.log(record.get("Name")+" saved")}}),console.log(this.taco),Ext.Msg.alert("Status","Store Loaded with "+records.length+" records and "+blockedRecords.length+" blocked records.")},launch:function(){var store=Ext.create("Rally.data.WsapiDataStore",{model:"User Story",listeners:{load:function(store,data,success){console.log(data)}},autoLoad:!0,fetch:["Name","ScheduleState","Blocked"],filters:[{property:"Blocked",value:!1}]}),scope={taco:!0},scope2={taco:"panda"};store.on("load",this.fireFromTheStore,scope)}});
 
             Rally.launchApp('CustomApp', {
                 name:"Son of Excercise1",
